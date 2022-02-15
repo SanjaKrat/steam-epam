@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.btn-accent {
+    background-color: #6C69FF;
+}
+
+.vh-75  {
+    min-height: 80vh;
+}

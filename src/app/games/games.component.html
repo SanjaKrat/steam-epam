@@ -1,0 +1,24 @@
+<div class="container h-75 mt-5 bg-white px-5 pt-3 vh-75 rounded-1 shadow-sm">
+    <h3 class="my-3">Games</h3>
+    <form class="form-outline align-items-bottom">
+        <div class="row d-flex align-items-end">
+            <div class="col-9">
+                <label for="search">Search Games</label>
+                <input type="text" 
+                    id="search"
+                    class="form-control"
+                    placeholder="Search Games">
+            </div>
+            <div class="col">
+                <button class="btn btn-primary btn-accent mt-1" type="button">Sign In</button>
+            </div>
+        </div>
+    </form>
+    
+    <h3 class="my-3">Featured Games</h3>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 ">
+        <app-game-card 
+            *ngFor="let game of games"
+            [game]="game"></app-game-card>
+    </div>
+</div>
