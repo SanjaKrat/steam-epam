@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
-pp.use(express.static(__dirname + "/dist/<app-name>"));
+pp.use(express.static(__dirname + "/dist/steam-epam-app"));
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname + "/dist/steam-epam-app/index.html"));
 });
