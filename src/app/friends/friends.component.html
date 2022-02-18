@@ -16,6 +16,7 @@
     </form>
     
     <h3 class="my-3">My Friends</h3>
-    <app-friend-item></app-friend-item>
-    <app-friend-item></app-friend-item>
+    <app-friend-item 
+        *ngFor="let user of users"
+        [user]="user"></app-friend-item>
 </div>
