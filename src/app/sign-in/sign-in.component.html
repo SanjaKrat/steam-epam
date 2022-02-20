@@ -1,13 +1,17 @@
 <div class="container bg-light min-vh-100 d-flex align-items-center justify-content-center" style="height: 100%">
   <div class="login bg-white shadow d-flex align-items-center center-block justify-content-center border rounded">
-    <form class="col-9" [formGroup]="signInForm">
+    <form class="col-9 " [formGroup]="signInForm" (ngSubmit)="onSubmit()">
       <h3 class="fw-normal mb-3 pb-3 mt-3 text-center">Sign in</h3>
       <div class="form-outline mb-4">
         <label class="form-label" for="email">Email</label>
-        <input type="email" 
+        <input 
+        type="email" 
         id="email" 
         class="form-control form-control" 
         placeholder="Email"
+        [ngClass]="{
+          'is-invalid': emailInvalid
+         }"
         formControlName="email" />
       </div>
       <div class="form-outline mb-4">
@@ -16,11 +20,15 @@
         id="password" 
         class="form-control form-control" 
         placeholder="Password"
+        [ngClass]="{
+          'is-invalid': passwordInvalid
+         }"
         formControlName="password" />
       </div>
       <div class="pt-1 mb-4">
-        <button class="btn btn-primary col-12 btn-accent" type="button">Sign In</button>
+        <button class="btn btn-primary col-12 btn-accent" type="submit">Sign In</button>
       </div>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-3">{{error}}</div>
     </form>
   </div>
 </div>

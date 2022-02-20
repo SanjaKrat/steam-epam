@@ -6,8 +6,8 @@ export const Users: User[] = [
         nick: 'oleksandr',
         age: 27,
         friendsIds: [1, 8, 9], 
-        email: 'test@epam.com',
-        password: 'test1'
+        email: 'oleksandrkrat@gmail.com',
+        password: 'test'
     },
     {
         id: 1,

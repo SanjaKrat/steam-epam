@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,22 +11,57 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
-  signInForm: FormGroup;
+  emailPattern = '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
 
+  signInForm = new FormGroup({
+    email: new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.email
+    ])),
+    password: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(4)
+    ])
+  });
+  error = '';
+  emailInvalid: (boolean | undefined);
+  passwordInvalid: (boolean | undefined);
+  currentUser: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
-  ) { 
-    this.signInForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    })
-  }
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
 
+  }
+
+  onSubmit() {
+
+    this.emailInvalid = this.signInForm.get('email')?.hasError('required') || this.signInForm.get('email')?.hasError('email');
+    this.passwordInvalid = this.signInForm.get('password')?.hasError('required') || this.signInForm.get('password')?.hasError('minlength');
+
+    
+
+    if (this.signInForm.invalid) {
+      console.log("invalid form");
+      this.error = "Invalid email or password";
+      return;
+    }
+
+    this.error = '';
+    console.log("Valid form");
+    this.currentUser = this.authService.login(this.signInForm.value.email, this.signInForm.value.password);
+    console.log(Boolean(this.currentUser));
+    console.log(this.currentUser);
+    
+    
+    if(this.currentUser.status === '200') {
+      this.router.navigate(['games'])
+    }
   }
 
 }
