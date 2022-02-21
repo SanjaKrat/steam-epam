@@ -1,8 +1,9 @@
 export interface User {
-    id: number, 
-    nick: string, 
-    age: number
-    friendsIds: (number[]),
-    email: string, 
-    password: string
+    id: string | undefined, 
+    username: string, 
+    age?: string,
+    friendsIds?: (string[]),
+    library?: string[],
+    email?: string, 
+    password?: string
 }

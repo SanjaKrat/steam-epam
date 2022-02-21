@@ -9,6 +9,8 @@ import { GamesService } from '../services/games/games.service';
 })
 export class GamesComponent implements OnInit {
   games: Game[] = [];
+  inLibrary = false;
+  searchText = '';
 
   constructor(private gamesService: GamesService) { }
 

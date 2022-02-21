@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "steam-127e7": {
+      "hosting": {
+        "steam-epam-app": [
+          "steam-127e7"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "steam-127e7"
+  }
+}

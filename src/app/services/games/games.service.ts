@@ -1,18 +1,25 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from 'src/app/models/game';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Users } from 'src/app/mock-data/users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GamesService {
 
-  private gamesURL = 'api/games';
+  private dbPath = 'games';
+  private gamesCollection: AngularFirestoreCollection<Game>;
+  games: Observable<Game[]>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private afs: AngularFirestore) {
+    this.gamesCollection = afs.collection<any>(this.dbPath);
+    this.games = this.gamesCollection.valueChanges();
+   }
 
-  getGames(): Observable<Game[]> {
-    return this.http.get<Game[]>(this.gamesURL)
-  }
+
+   getGames() {
+     return this.games;
+   }
 }

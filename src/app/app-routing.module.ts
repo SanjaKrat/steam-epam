@@ -2,31 +2,40 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FriendsComponent } from './friends/friends.component';
 import { GamesComponent } from './games/games.component';
+import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
-import { AuthGuardService} from './services/auth-guard/auth-guard.service';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard'
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['signin']);
+const redirectIfSignIn = () => redirectLoggedInTo(['/library'])
 
 const routes: Routes = [
   { path: '', redirectTo: '/games', pathMatch: 'full' },
   { path: 'games', component: GamesComponent },
   { 
     path: 'library', 
-    component: GamesComponent, 
-    canActivate: [AuthGuardService]
+    component: LibraryComponent, 
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin }
   }, 
   { 
     path: 'friends', 
     component: FriendsComponent, 
-    canActivate: [AuthGuardService]
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin }
   }, 
   { 
     path: 'profile', 
     component: ProfileComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin }
   },
   { 
     path: 'signin', 
     component: SignInComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectIfSignIn }
    }
 ];
 
@@ -34,7 +43,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthGuardService],
+  providers: [],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

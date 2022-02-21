@@ -1,31 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { InMemoryDataService } from '../in-memory-data/in-memory-data.service';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(
-    public jwtHelper: JwtHelperService, 
-    private http: HttpClient, 
-    private back: InMemoryDataService
-    ) {}
 
+  userData: any;
   authToken: any;
 
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem('currentUser');
-    this.authToken = token;
-    // return !this.jwtHelper.isTokenExpired(this.authToken);
+  constructor(public auth: AngularFireAuth, private router: Router) {
+      this.userData = auth.authState;
+    }
+
+
+  isAuthenticated(): boolean {
+    this.authToken = localStorage.getItem('currentUser');
+    console.log(this.authToken ? true : false);
+    
     return this.authToken ? true : false;
   }
 
-  login(email: string, password: string) {
-    let currentUser = this.back.getCurrentUser(email, password);
-    if (currentUser.status === '200') {
-      localStorage.setItem('currentUser', 'jwt-token');
-    }
-    return currentUser;
+  login(email: string, password: string): any {
+    this.auth.signInWithEmailAndPassword(email, password)
+      .then(responce => {
+        this.userData = responce.user;
+        localStorage.setItem('currentUser', JSON.stringify(this.userData));
+        this.auth.onAuthStateChanged(() => this.router.navigate(['library']))
+      }).catch(err => {
+        return err;
+      })
+  }
+
+  logout() {
+    this.auth.signOut();
+    localStorage.removeItem('curentUser');
   }
 }

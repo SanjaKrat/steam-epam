@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -29,8 +28,6 @@ export class SignInComponent implements OnInit {
   currentUser: any;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
   ) { }
@@ -40,11 +37,8 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.emailInvalid = this.signInForm.get('email')?.hasError('required') || this.signInForm.get('email')?.hasError('email');
     this.passwordInvalid = this.signInForm.get('password')?.hasError('required') || this.signInForm.get('password')?.hasError('minlength');
-
-    
 
     if (this.signInForm.invalid) {
       console.log("invalid form");
@@ -53,15 +47,6 @@ export class SignInComponent implements OnInit {
     }
 
     this.error = '';
-    console.log("Valid form");
-    this.currentUser = this.authService.login(this.signInForm.value.email, this.signInForm.value.password);
-    console.log(Boolean(this.currentUser));
-    console.log(this.currentUser);
-    
-    
-    if(this.currentUser.status === '200') {
-      this.router.navigate(['games'])
-    }
+    this.authService.login(this.signInForm.value.email, this.signInForm.value.password);
   }
-
 }

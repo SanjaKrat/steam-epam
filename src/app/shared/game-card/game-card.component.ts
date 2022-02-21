@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Game } from 'src/app/models/game';
 
 @Component({
@@ -9,10 +9,13 @@ import { Game } from 'src/app/models/game';
 export class GameCardComponent implements OnInit {
 
   @Input() game: Game;
+  @Input() inLibrary: boolean = false;
+  @Input() noItems: boolean = false;
 
   constructor() {
     this.game = {
       name: '', 
+      id: '',
       description: '',
       price: 0,
       coverURL: ''

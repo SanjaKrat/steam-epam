@@ -99,6 +99,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "steam-epam-app:build:production",
+            "firebaseProject": "steam-127e7",
+            "firebaseHostingSite": "steam-127e7"
+          }
         }
       }
     }
