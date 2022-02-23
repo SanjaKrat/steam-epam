@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../models/game';
 import { GamesService } from '../services/games/games.service';
-import { CurrentUserService } from '../services/current-user/current-user.service';
 import { User } from '../models/user';
 import { UsersService } from '../services/users/users.service';
 
@@ -22,28 +21,27 @@ export class LibraryComponent implements OnInit {
 
   constructor(
     private gamesService: GamesService, 
-    private currentUserService: CurrentUserService, 
     private userService: UsersService
     ) { }
 
     ngOnInit(): void {
-      this.email = this.currentUserService.getEmail();
+      this.email = this.userService.getEmail();
       this.gamesService.getGames().subscribe(games => this.games = games);
-      this.userService.getUsers()
-        .subscribe(users => {
-          users.filter(user => {
-            if(user.email === this.email) {
-              this.currentUser = user;
+      // this.userService.getUsers()
+      //   .subscribe(users => {
+      //     users.filter(user => {
+      //       if(user.email === this.email) {
+      //         this.currentUser = user;
               
-              user.library?.forEach((id:string) => {
-                this.games.filter(game => {
-                  if (game.id === id) {
-                    this.library.push(game);
-                  }
-                })
-              })
-            }
-          })
-        });
+      //         user.library?.forEach((id:string) => {
+      //           this.games.filter(game => {
+      //             if (game.id === id) {
+      //               this.library.push(game);
+      //             }
+      //           })
+      //         })
+      //       }
+      //     })
+      //   });
     }
 }

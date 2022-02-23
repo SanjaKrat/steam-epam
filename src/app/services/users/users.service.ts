@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +8,30 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 export class UsersService {
   
   private dbPath = 'users';
-  private usersCollection: AngularFirestoreCollection<User>;
-  users: Observable<User[]>;
 
-  constructor(private afs: AngularFirestore) { 
-    this.usersCollection = afs.collection<any>(this.dbPath);
-    this.users = this.usersCollection.valueChanges();
+  constructor(private afs: AngularFirestore) { }
+
+  getUserDoc(id: string) {
+    return this.afs
+    .collection(this.dbPath)
+    .doc(id)
+    .valueChanges();
   }
 
-  getUsers() {
-    return this.users;
+  getUserList() {
+    return this.afs
+    .collection(this.dbPath)
+    .snapshotChanges();
+  }
+
+  updateUser(user: User, id: string) {
+    return this.afs
+    .collection(this.dbPath)
+    .doc(id)
+    .update(user)
+  }
+
+  getEmail() {
+    return JSON.parse(localStorage.getItem('currentUser') || '{}')?.email
   }
 }

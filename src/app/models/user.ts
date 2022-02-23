@@ -1,5 +1,5 @@
 export interface User {
-    id: string | undefined, 
+    id: string, 
     username: string, 
     age?: string,
     friendsIds?: (string[]),

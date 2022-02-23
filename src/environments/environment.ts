@@ -13,6 +13,7 @@ export const environment = {
     authDomain: 'steam-127e7.firebaseapp.com',
     messagingSenderId: '417529291609',
     measurementId: 'G-8Y524R119M',
+    databasaURL: 'https://steam-127e7-default-rtdb.europe-west1.firebasedatabase.app'
   }
 };
 

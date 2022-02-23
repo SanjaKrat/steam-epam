@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user';
 import { UsersService } from '../services/users/users.service';
-import { CurrentUserService } from '../services/current-user/current-user.service';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+// import { CurrentUserService } from '../services/current-user/current-user.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 
@@ -15,61 +15,41 @@ export class FriendsComponent implements OnInit {
   friends: User[] = [];
   users: User[] = [];
   email: string = '';
-  currentUser: User = {id: '', username: ''};
+  currentUser: any;
   searchText: string = '';
 
   constructor(private userService: UsersService, 
-    private CUS: CurrentUserService,
-    private db: AngularFirestore) { }
-      
-
-  ngOnInit(): void {
-    this.email = this.CUS.getEmail();
-    this.userService.getUsers()
-        .subscribe(users => {
-          this.users = users
-          this.getCurrentUser();
-          this.getFriends();
-        });
     
-  }
-
-  getUsers() {
-    
-  };
-
-  getCurrentUser() {
-    
-    this.users.forEach(user => {
-      if(user.email === this.email) {
-        this.currentUser = user;
-      }})
-  }
-
-
-
-  getFriends(): void {
-    console.log('getFriends');
-    console.log(this.currentUser.friendsIds);
-    this.currentUser.friendsIds?.forEach((id:string) => {
-      this.users.filter(user => {
-        if (user.id === id) {
-          if(!this.friends.includes(user)) {
-            this.friends.push(user);
-          }
-        }
-      })
+    private db: AngularFirestore) {
     }
-  )}
+    
+    
+    ngOnInit(): void {
+      this.email = this.userService.getEmail();
+      this.userService.getUserList().subscribe(res => {
+        this.users = res.map(u => {
+          return u.payload.doc.data() as User;
+        })
+      this.currentUser = this.users.filter((user: User) => user.email === this.email)[0]
+      this.getFriends(this.currentUser.friendsIds)
+    })
+
+  }
+
+  getFriends(ids: string[]): void {
+    let f = [];
+    for(let i = 0; i < ids.length; i++) {
+      f.push(this.users.filter(user => user.id === ids[i])[0])
+    }
+    localStorage.setItem('friends', JSON.stringify(f));
+    this.friends = JSON.parse(localStorage.getItem('friends') || '[]');
+    console.log(this.friends, 'this.friends from getUsers');
+  }
 
   delete(friendId: string): void {
     let idx = this.currentUser.friendsIds?.indexOf(friendId);
     this.currentUser.friendsIds?.splice(Number(idx), 1);
-    console.log('delete');
-    console.log(this.currentUser.friendsIds);
-    this.db.collection('users')
-    .doc(this.currentUser.id)
-    .set(this.currentUser, {merge: true})
+    this.userService.updateUser(this.currentUser, this.currentUser.id);
   }
 
 }

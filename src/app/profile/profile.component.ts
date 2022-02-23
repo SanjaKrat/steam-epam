@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUserService } from '../services/current-user/current-user.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from '../models/user';
 import { UsersService } from '../services/users/users.service';
@@ -18,8 +17,7 @@ export class ProfileComponent implements OnInit {
 
   profileForm: FormGroup = new FormGroup({});
 
-  constructor(
-    private currentUserService: CurrentUserService, 
+  constructor( 
     private userService: UsersService,
     private db: AngularFirestore) { 
       this.profileForm = new FormGroup({
@@ -31,21 +29,21 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.email = this.currentUserService.getEmail();
-    this.userService.getUsers()
-      .subscribe(users => {
-        users.filter(user => {
-          if(user.email === this.email) {
-            this.currentUser = user;
+    this.email = this.userService.getEmail();
+    // this.userService.getUsers()
+    //   .subscribe(users => {
+    //     users.filter(user => {
+    //       if(user.email === this.email) {
+    //         this.currentUser = user;
             
-            this.profileForm.patchValue({
-              username: user.username,
-              email: user.email,
-              age: user.age
-            })
-          }
-        })
-      });
+    //         this.profileForm.patchValue({
+    //           username: user.username,
+    //           email: user.email,
+    //           age: user.age
+    //         })
+    //       }
+    //     })
+    //   });
   }
 
   onSubmit(): void {
