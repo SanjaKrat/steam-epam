@@ -23,6 +23,8 @@
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mb-3 pb-4">
         <app-game-card 
             *ngFor="let game of games | filter: searchText"
-            [game]="game"></app-game-card>
+            [game]="game"
+            [inLibraryGamePage]="libraryIds.includes(game.id)">
+        </app-game-card>
     </div>
 </div>

@@ -7,20 +7,21 @@
     <div class="card-body d-flex flex-column justify-content-between">
       <p class="card-text">{{game.description}}</p>
       <a 
-        href="#" 
+        routerLink="/library" 
         class="btn btn-primary btn-accent col-12 align-self-end"
-        *ngIf="!inLibrary">
-        Add to Library</a>
+        *ngIf="!inLibrary && inLibraryGamePage">Go to Library</a>
+
+      <a
+        class="btn btn-primary btn-accent col-12 align-self-end"
+        *ngIf="!inLibrary && !inLibraryGamePage"
+        (click)="add(game.id)">Add to Library</a>
+
       <div class="col-12 d-flex justify-content-between" *ngIf="inLibrary">
-        <a  
-        class="btn btn-primary btn-accent col-5 align-self-end"
-        >
-            Download
+        <a class="btn btn-primary btn-accent col-5 align-self-end">
+          Download
         </a>
-        <a 
-        class="btn btn-primary btn-light col-5 align-self-end border"
-        >
-            Share
+        <a class="btn btn-primary btn-light col-5 align-self-end border">
+          Share
         </a>
       </div>
     </div>

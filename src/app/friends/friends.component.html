@@ -9,23 +9,43 @@
                     name="search"
                     class="form-control"
                     [(ngModel)]="searchText"
+                    (ngModelChange)="onSearch.next(false)"
                     autocomplete="off"
                     placeholder="Search friends">
             </div>
             <div class="col">
-                <button class="btn btn-primary btn-accent mt-1" type="button">Search</button>
+                <button 
+                    class="btn btn-primary btn-accent mt-1" 
+                    type="button"
+                    (click)="searchFriends(searchText)">Search</button>
             </div>
         </div>
     </form>
     
-    <h3 class="my-3">My Friends</h3>
+    <h3 class="my-3" *ngIf="(onSearch | async) === false || !searchText">My Friends</h3>
 
-    <p *ngIf="!friends.length" class="mt-3">You have no friends</p>    
-    <p *ngIf="!(friends | filter: searchText).length" class="mt-3">You have no friends with this</p>    
+    <p *ngIf="!friends.length && !serchedUsers.length" class="mt-3">You have no friends</p>    
+    <p *ngIf="!(friends | filter: searchText).length && !serchedUsers.length && (onSearch | async) === false" class="mt-3">You have no friends with this username</p>    
 
-    <div class="row shadow-sm mb-2 align-items-center" 
-        *ngFor="let friend of friends | filter: searchText">
-        <span class="col-10">{{ friend.username }} </span>
-        <button class="btn btn-danger col-2" (click)="delete(friend.id)">Remove Friend</button>
+    <div class="row mx-2" *ngIf="friends.length && !serchedUsers.length || searchText === '' ">
+        <div class="row shadow-sm px-0 mb-2 align-items-center" 
+            *ngFor="let friend of friends | filter: searchText">
+            <span class="col-10">{{ friend.username }} </span>
+            <button class="btn btn-danger col-2" (click)="delete(friend.id)">Remove Friend</button>
+        </div>
     </div>
+    
+
+    <h3 class="my-3" *ngIf="searchText && (onSearch | async) === true">Search Friends: {{searchText}}</h3>
+    
+    <p *ngIf="!serchedUsers.length && (onSearch | async) === true" class="mt-3">We have no users with this username</p>    
+    
+    <div class="row mx-2" *ngIf="serchedUsers && searchText">
+        <div class="row shadow-sm mb-2 px-0 align-items-center" 
+            *ngFor="let user of serchedUsers | filter: searchText">
+            <span class="col-10">{{ user.username }} </span> 
+            <button class="btn btn-primary btn-accent col-2" (click)="addFriend(user.id)">Add Friend</button>
+        </div>
+    </div>
+    
 </div>
