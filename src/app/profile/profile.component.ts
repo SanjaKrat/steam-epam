@@ -17,9 +17,7 @@ export class ProfileComponent implements OnInit {
   message: string = '';
   profileForm: FormGroup = new FormGroup({});
 
-  constructor( 
-    private userService: UsersService,
-    private db: AngularFirestore) { 
+  constructor(private userService: UsersService) { 
     this.profileForm = new FormGroup({
       username: new FormControl(''),
       email: new FormControl(''),

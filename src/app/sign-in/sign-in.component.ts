@@ -27,10 +27,7 @@ export class SignInComponent implements OnInit {
   passwordInvalid: (boolean | undefined);
   currentUser: any;
 
-  constructor(
-    private router: Router,
-    public authService: AuthService
-  ) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
 
