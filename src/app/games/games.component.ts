@@ -19,8 +19,10 @@ export class GamesComponent implements OnInit {
   }
 
   getGames(): void {
-    this.gamesService.getGames()
-      .subscribe(games => this.games = games);
+    this.gamesService.getGames().subscribe(res => {
+      this.games = res.map(u => {
+        return u.payload.doc.data() as Game;
+      })
+    })
   }
-
 }

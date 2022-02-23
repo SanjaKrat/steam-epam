@@ -10,16 +10,21 @@ import { Users } from 'src/app/mock-data/users';
 export class GamesService {
 
   private dbPath = 'games';
-  private gamesCollection: AngularFirestoreCollection<Game>;
-  games: Observable<Game[]>;
 
-  constructor(private afs: AngularFirestore) {
-    this.gamesCollection = afs.collection<any>(this.dbPath);
-    this.games = this.gamesCollection.valueChanges();
-   }
+  constructor(private afs: AngularFirestore) { }
 
 
    getGames() {
-     return this.games;
+      return this.afs
+      .collection(this.dbPath)
+      .snapshotChanges();
+   }
+
+   getLibrary(games: Game[], ids: string[]) {
+    let f = [];
+    for(let i = 0; i < ids.length; i++) {
+      f.push(games.filter(game => game.id === ids[i])[0])
+    }
+    return f;
    }
 }

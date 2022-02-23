@@ -24,24 +24,20 @@ export class LibraryComponent implements OnInit {
     private userService: UsersService
     ) { }
 
-    ngOnInit(): void {
-      this.email = this.userService.getEmail();
-      this.gamesService.getGames().subscribe(games => this.games = games);
-      // this.userService.getUsers()
-      //   .subscribe(users => {
-      //     users.filter(user => {
-      //       if(user.email === this.email) {
-      //         this.currentUser = user;
-              
-      //         user.library?.forEach((id:string) => {
-      //           this.games.filter(game => {
-      //             if (game.id === id) {
-      //               this.library.push(game);
-      //             }
-      //           })
-      //         })
-      //       }
-      //     })
-      //   });
-    }
+  ngOnInit(): void {
+    this.email = this.userService.getEmail();
+    this.gamesService.getGames().subscribe(res => {
+      this.games = res.map(u => {
+        return u.payload.doc.data() as Game;
+      })
+    })
+    this.userService.getUserList().subscribe(res => {
+      let users = res.map(u => {
+        return u.payload.doc.data() as User;
+      })
+    this.currentUser = users.filter((user: User) => user.email === this.email)[0];
+    this.library = this.gamesService.getLibrary(this.games, this.currentUser.library || []);
+    })
+    
+  }
 }

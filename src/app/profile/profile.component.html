@@ -30,9 +30,13 @@
           placeholder="Age" />
       </div>
       <div class="pt-1 mb-4">
-        <button class="btn btn-primary col-12 btn-accent" 
-          type="button" (click)="onSubmit()">Save</button>
+        <button 
+          class="btn btn-primary col-12 btn-accent" 
+          type="button" 
+          (click)="onSubmit()">Save</button>
       </div>
+      <div *ngIf="message.length && updated" class="alert alert-success mt-3 mb-3 text-center">{{message}}</div>
+      <div *ngIf="message.length && !updated" class="alert alert-danger mt-3 mb-3 text-center">{{message}}</div>
     </form>
   </div>
 </div>

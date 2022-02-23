@@ -27,4 +27,5 @@
             [inLibrary]="inLibrary"></app-game-card>
         </div>
     <p *ngIf="!library.length" class="mt-3">You have no games in library</p>    
+    <p *ngIf="!(library | filter: searchText).length" class="mt-3">You have no {{searchText}} in library</p>    
 </div>

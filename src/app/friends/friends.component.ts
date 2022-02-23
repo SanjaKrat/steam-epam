@@ -43,7 +43,6 @@ export class FriendsComponent implements OnInit {
     }
     localStorage.setItem('friends', JSON.stringify(f));
     this.friends = JSON.parse(localStorage.getItem('friends') || '[]');
-    console.log(this.friends, 'this.friends from getUsers');
   }
 
   delete(friendId: string): void {
