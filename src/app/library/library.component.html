@@ -23,7 +23,7 @@
         <app-game-card 
             *ngFor="let game of library | filter: searchText"
             [game]="game"
-            [noItems]="game.length"
+            [noItems]="game?.length"
             [inLibrary]="inLibrary"></app-game-card>
         </div>
     <p *ngIf="!library.length" class="mt-3">You have no games in library</p>    
