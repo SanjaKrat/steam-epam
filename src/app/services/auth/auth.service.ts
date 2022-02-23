@@ -16,25 +16,20 @@ export class AuthService {
       this.userData = auth.authState;
     }
 
-
-  // isAuthenticated(): boolean {
-  //   this.authToken = localStorage.getItem('currentUser');    
-  //   return this.authToken ? true : false;
-  // }
-
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 
   login(email: string, password: string): any {
-    this.auth.signInWithEmailAndPassword(email, password)
+    this.auth
+      .signInWithEmailAndPassword(email, password)
       .then(responce => {
         this.userData = responce.user;
         localStorage.setItem('currentUser', JSON.stringify(this.userData));
         this.auth.onAuthStateChanged(() => this.router.navigate(['library']))
         this.loggedIn.next(true);
-      }).catch(err => {
-        return err;
+      }).catch(() => {
+        this.loggedIn.next(false);
       })
   }
 

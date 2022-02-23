@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -41,12 +41,16 @@ export class SignInComponent implements OnInit {
     this.passwordInvalid = this.signInForm.get('password')?.hasError('required') || this.signInForm.get('password')?.hasError('minlength');
 
     if (this.signInForm.invalid) {
-      console.log("invalid form");
-      this.error = "Invalid email or password";
+      this.error = 'Invalid email or password';
       return;
     }
 
     this.error = '';
-    this.authService.login(this.signInForm.value.email, this.signInForm.value.password);
+    this.authService.login(this.signInForm.value.email, this.signInForm.value.password);    
+    this.authService.isLoggedIn.subscribe(res => {
+      if(res === false) {
+        this.error = 'Invalid email or password'
+      }
+    })
   }
 }
