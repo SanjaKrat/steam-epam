@@ -36,7 +36,7 @@ const routes: Routes = [
     component: SignInComponent,
     canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectIfSignIn }
-   }
+  }
 ];
 
 @NgModule({

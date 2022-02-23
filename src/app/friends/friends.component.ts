@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user';
 import { UsersService } from '../services/users/users.service';
-// import { CurrentUserService } from '../services/current-user/current-user.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
 
 
 @Component({

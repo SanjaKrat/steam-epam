@@ -6,12 +6,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FriendsComponent } from './friends/friends.component';
-import { FriendItemComponent } from './friends/friend-item/friend-item.component';
 import { GamesComponent } from './games/games.component';
 import { GameCardComponent } from './shared/game-card/game-card.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LibraryComponent } from './library/library.component';
 import { environment } from 'src/environments/environment';
@@ -26,7 +24,6 @@ import { FilterPipe } from './shared/filter/filter.pipe';
     ProfileComponent,
     HeaderComponent,
     FriendsComponent,
-    FriendItemComponent,
     GamesComponent,
     GameCardComponent,
     LibraryComponent,

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Game } from 'src/app/models/game';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Users } from 'src/app/mock-data/users';
 
 @Injectable({
   providedIn: 'root'

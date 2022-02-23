@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,17 +10,20 @@ export class AuthService {
 
   userData: any;
   authToken: any;
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(public auth: AngularFireAuth, private router: Router) {
       this.userData = auth.authState;
     }
 
 
-  isAuthenticated(): boolean {
-    this.authToken = localStorage.getItem('currentUser');
-    console.log(this.authToken ? true : false);
-    
-    return this.authToken ? true : false;
+  // isAuthenticated(): boolean {
+  //   this.authToken = localStorage.getItem('currentUser');    
+  //   return this.authToken ? true : false;
+  // }
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
   login(email: string, password: string): any {
@@ -28,6 +32,7 @@ export class AuthService {
         this.userData = responce.user;
         localStorage.setItem('currentUser', JSON.stringify(this.userData));
         this.auth.onAuthStateChanged(() => this.router.navigate(['library']))
+        this.loggedIn.next(true);
       }).catch(err => {
         return err;
       })
@@ -35,6 +40,7 @@ export class AuthService {
 
   logout() {
     this.auth.signOut();
-    localStorage.removeItem('curentUser');
+    this.loggedIn.next(false);
+    localStorage.clear();
   }
 }

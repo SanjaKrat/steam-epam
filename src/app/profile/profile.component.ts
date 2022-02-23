@@ -36,9 +36,6 @@ export class ProfileComponent implements OnInit {
       })
     this.currentUser = users.filter((user: User) => user.email === this.email)[0];
     
-    console.log(users, 'profile users');
-    console.log(this.currentUser, 'profile currentUser');
-    
     this.profileForm = new FormGroup({
       username: new FormControl(this.currentUser.username, Validators.compose([
         Validators.required

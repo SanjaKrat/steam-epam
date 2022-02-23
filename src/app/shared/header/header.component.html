@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow ">
-  <div class="container-md">
+  <div class="container">
     <a class="navbar-brand" href="#">
         <img src="../../assets/steam.svg" alt="steam-logo">
     </a>
@@ -15,19 +15,26 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-11">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" routerLink="/games">Games</a>
+          <a class="nav-link fs-5" aria-current="page" routerLink="/games">Games</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/library">Library</a>
+          <a class="nav-link fs-5" routerLink="/library">Library</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/friends">Friends</a>
+          <a class="nav-link fs-5" routerLink="/friends">Friends</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/profile">Profile</a>
+          <a class="nav-link fs-5" routerLink="/profile">Profile</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()">logout</a>
+        <li class="nav-item" *ngIf="(isAuth | async) === false" >
+          <a 
+            class="nav-link fs-5" routerLink="/signin" >Sign In</a>
+        </li>
+        <li class="nav-item" *ngIf="(isAuth | async) === true">
+          <a 
+            class="nav-link fs-5" 
+            style="cursor: pointer;" 
+            (click)="logout()">Sign out</a>
         </li>
       </ul>
     </div>
