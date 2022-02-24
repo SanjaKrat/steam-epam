@@ -9,11 +9,11 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
 
   userData: any;
-  authToken: any;
   loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(public auth: AngularFireAuth, private router: Router) {
       this.userData = auth.authState;
+      this.loggedIn = new BehaviorSubject<boolean>(!this.userData.isAnonymous || false);
     }
 
   get isLoggedIn() {

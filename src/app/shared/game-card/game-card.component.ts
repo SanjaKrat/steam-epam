@@ -21,7 +21,8 @@ export class GameCardComponent implements OnInit {
       id: '',
       description: '',
       price: 0,
-      coverURL: ''
+      coverURL: '',
+      tag: ''
     }
     userService.getUserList().subscribe(res => {
       res.map(u => {

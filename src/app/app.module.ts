@@ -16,6 +16,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { FilterPipe } from './shared/filter/filter.pipe';
+import { FilterByPricePipe } from './shared/filter-by-price/filter-by-price.pipe';
+import { FilterByTagPipe } from './shared/filterByTag/filter-by-tag.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { FilterPipe } from './shared/filter/filter.pipe';
     GamesComponent,
     GameCardComponent,
     LibraryComponent,
-    FilterPipe
+    FilterPipe,
+    FilterByPricePipe,
+    FilterByTagPipe
   ],
   imports: [
     BrowserModule,

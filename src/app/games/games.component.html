@@ -1,4 +1,4 @@
-<div class="container h-75 mt-5 bg-white px-5 pt-3 vh-75 rounded-1 shadow-sm">
+<div class="container h-75 mt-5 mb-3 bg-white px-5 pt-3 vh-75 rounded-1 shadow-sm">
     <h3 class="my-3">Games</h3>
     <form class="form-outline align-items-bottom">
         <div class="row d-flex align-items-end">
@@ -18,13 +18,109 @@
         </div>
     </form>
     
-    <h3 class="my-3">Featured Games</h3>
-    <p *ngIf="!(games | filter: searchText).length" class="mt-3">Here found no games for your search</p>    
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mb-3 pb-4">
-        <app-game-card 
-            *ngFor="let game of games | filter: searchText"
-            [game]="game"
-            [inLibraryGamePage]="libraryIds.includes(game.id)">
-        </app-game-card>
+    <div class="container d-flex justify-content-between">
+
+        <div class="col-xxl-10 col-xl-8 col-md-10">
+            <h3 class="my-3">Featured Games</h3>
+            <p *ngIf="!(games | filter: searchText).length" class="mt-3">Here found no games for your search</p>    
+            <div class="row row-cols-xxl-3 row-cols-lg-2 row-cols-xl-2 row-cols-md-2 row-cols-sm-1 g-3 pb-4">
+                <app-game-card 
+                    *ngFor="let game of games | filter: searchText | filterByPrice: range | filterByTag: tagForm.value "
+                    [game]="game"
+                    [inLibraryGamePage]="libraryIds.includes(game.id)">
+                </app-game-card>
+            </div>
+        </div>
+    
+        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-1 border-start border-dark mt-5">
+            
+            <!-- OFFCANVAS -->
+            <div class="d-block d-xl-none d-lg-none d-md-block d-sm-block ">
+                <button class="btn btn-primary btn-accent mx-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filter</button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        
+                        <form class="mt-5 col-10 mx-auto">
+                            <label for="customRange2" class="form-label fs-5">Filter by price</label>
+                            <input 
+                            type="range" 
+                            name="priceRange"
+                            class="form-range" 
+                            [min]="min" [max]="max" 
+                            id="customRange2"
+                            [value]="max"
+                            [(ngModel)]="range">
+                            <p class="fs-5 text-center" >Max price {{range || max}}</p>
+                        </form>
+            
+                        <form class="mt-5 col-10 mx-auto" [formGroup]="tagForm">
+                            <p class="fs-5">Filter by tag</p>
+                            <div class="form-check">
+                                <input formControlName="indie" class="form-check-input" type="checkbox" value="indie"  id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                Indie
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input formControlName="action" class="form-check-input" type="checkbox" value="action" id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                Action
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input formControlName="adventure" class="form-check-input" type="checkbox" value="adventure" id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                Adventure
+                                </label>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            
+             <!-- SIDEBAR -->
+            <div class="d-none d-xl-block d-lg-block d-md-none d-sm-none ">
+                <form class="mt-5 col-10 mx-auto">
+                    <label for="customRange2" class="form-label fs-5">Filter by price</label>
+                    <input 
+                    type="range" 
+                    name="priceRange"
+                    class="form-range" 
+                    [min]="min" [max]="max" 
+                    id="customRange2"
+                    [value]="max"
+                    [(ngModel)]="range">
+                    <p class="fs-5 text-center" >Max price {{range || max}}</p>
+                </form>
+
+                <form class="mt-5 col-10 mx-auto" [formGroup]="tagForm">
+                    <p class="fs-5">Filter by tag</p>
+                    <div class="form-check">
+                        <input formControlName="indie" class="form-check-input" type="checkbox" value="indie"  id="indie">
+                        <label class="form-check-label" for="indie">
+                        Indie
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input formControlName="action" class="form-check-input" type="checkbox" value="action" id="action">
+                        <label class="form-check-label" for="action">
+                        Action
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input formControlName="adventure" class="form-check-input" type="checkbox" value="adventure" id="adventure">
+                        <label class="form-check-label" for="adventure">
+                        Adventure
+                        </label>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
     </div>
 </div>

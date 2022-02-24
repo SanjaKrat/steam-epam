@@ -3,5 +3,6 @@ export interface Game {
     description: string, 
     price: number,
     coverURL: string,
-    id: string
+    id: string,
+    tag: string
 }

@@ -49,9 +49,7 @@ export class ProfileComponent implements OnInit {
   })
   }
 
-  onSubmit(): void {
-    console.log('update user profile');
-    
+  onSubmit(): void {    
     if (this.profileForm.valid){
       this.currentUser.username = this.profileForm.value.username;
       this.currentUser.email = this.profileForm.value.email;
